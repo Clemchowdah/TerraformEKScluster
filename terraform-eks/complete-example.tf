@@ -3,11 +3,11 @@ provider "aws" {
 }
 
 locals {
-  name   = "ascode-cluster"
-  region = "us-east-1"
+  name   = "clem-cluster"
+  region = "us-east-2"
 
   vpc_cidr = "10.123.0.0/16"
-  azs      = ["us-east-1a", "us-east-1b"]
+  azs      = ["us-east-2a", "us-east-2b"]
 
   public_subnets  = ["10.123.1.0/24", "10.123.2.0/24"]
   private_subnets = ["10.123.3.0/24", "10.123.4.0/24"]
@@ -66,8 +66,8 @@ module "eks" {
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
-    ami_type       = "AL2_x86_64"
-    instance_types = ["m5.large"]
+    ami_type       = "ami-085f9c64a9b75eed5"
+    instance_types = ["t2.micro"]
 
     attach_cluster_primary_security_group = true
   }
@@ -78,8 +78,8 @@ module "eks" {
       max_size     = 2
       desired_size = 1
 
-      instance_types = ["t3.large"]
-      capacity_type  = "SPOT"
+      instance_types = ["t2.micro"]
+     
 
       tags = {
         ExtraTag = "helloworld"
